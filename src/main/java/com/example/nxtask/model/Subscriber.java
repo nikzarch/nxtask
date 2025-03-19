@@ -1,12 +1,22 @@
 package com.example.nxtask.model;
 
+import jakarta.persistence.*;
+
 import java.util.regex.Pattern;
 /**
  * Класс абонента, хранящий его номер
  */
+@Entity
+@Table(name ="subscribers")
 public class Subscriber {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false, unique = true)
     private String number;
-    private final String regex = "7\\d{10}";
+    @Transient
+    private final static String regex = "7\\d{10}";
+    public Subscriber(){}
     public Subscriber(String number){
         if (!Pattern.matches(regex, number)){
             throw new IllegalArgumentException("Номер телефона должен состоять из 7 + 10 арабских цифр");
