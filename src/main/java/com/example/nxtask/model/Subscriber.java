@@ -1,0 +1,27 @@
+package com.example.nxtask.model;
+
+import java.util.regex.Pattern;
+/**
+ * Класс абонента, хранящий его номер
+ */
+public class Subscriber {
+    private String number;
+    private final String regex = "7\\d{10}";
+    public Subscriber(String number){
+        if (!Pattern.matches(regex, number)){
+            throw new IllegalArgumentException("Номер телефона должен состоять из 7 + 10 арабских цифр");
+        }
+        this.number = number;
+    }
+
+    public void setNumber(String number) {
+        if (!Pattern.matches(regex, number)){
+            throw new IllegalArgumentException("Номер телефона должен состоять из 7 + 10 арабских цифр");
+        }
+        this.number = number;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+}
