@@ -3,29 +3,26 @@ package com.example.nxtask.model;
 import jakarta.persistence.*;
 
 import java.util.regex.Pattern;
+
 /**
  * Класс абонента, хранящий его номер
  */
 @Entity
-@Table(name ="subscribers")
+@Table(name = "subscribers")
 public class Subscriber {
+    @Transient
+    private final static String regex = "7\\d{10}";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, unique = true)
     private String number;
-    @Transient
-    private final static String regex = "7\\d{10}";
-    public Subscriber(){}
-    public Subscriber(String number){
-        if (!Pattern.matches(regex, number)){
-            throw new IllegalArgumentException("Номер телефона должен состоять из 7 + 10 арабских цифр");
-        }
-        this.number = number;
+
+    public Subscriber() {
     }
 
-    public void setNumber(String number) {
-        if (!Pattern.matches(regex, number)){
+    public Subscriber(String number) {
+        if (!Pattern.matches(regex, number)) {
             throw new IllegalArgumentException("Номер телефона должен состоять из 7 + 10 арабских цифр");
         }
         this.number = number;
@@ -33,5 +30,12 @@ public class Subscriber {
 
     public String getNumber() {
         return number;
+    }
+
+    public void setNumber(String number) {
+        if (!Pattern.matches(regex, number)) {
+            throw new IllegalArgumentException("Номер телефона должен состоять из 7 + 10 арабских цифр");
+        }
+        this.number = number;
     }
 }

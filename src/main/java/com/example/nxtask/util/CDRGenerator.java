@@ -1,4 +1,4 @@
-package com.example.nxtask.generator;
+package com.example.nxtask.util;
 
 import com.example.nxtask.model.CDRRecord;
 import com.example.nxtask.model.CallType;
@@ -17,13 +17,37 @@ public class CDRGenerator {
         this.subscribers = new ArrayList<>(subscribers);
     }
 
+    public static List<Subscriber> getRandomSubscribers(int amount) {
+        Random random = new Random();
+        Set<String> uniqueNumbers = new HashSet<>();
+        while (uniqueNumbers.size() < amount) {
+            String number = generateRandomNumber(random);
+            uniqueNumbers.add(number);
+        }
+        return uniqueNumbers.stream().map(Subscriber::new).toList();
+    }
+
+    private static String generateRandomNumber(Random random) {
+        StringBuilder number = new StringBuilder("7");
+        for (int i = 0; i < 10; i++) {
+            number.append(random.nextInt(10));
+        }
+        return number.toString();
+    }
+
     public List<CDRRecord> generateCDRRecords(int amount) {
         List<CDRRecord> records = new ArrayList<>();
+        Random random = new Random();
         for (int i = 0; i < amount; i++) {
             CallType type = getRandomCallType();
-            Subscriber[] subscribers = getRandomCallerAndAnswerer();
+            Subscriber caller, answerer;
+
+            do {
+                caller = subscribers.get(random.nextInt(subscribers.size()));
+                answerer = subscribers.get(random.nextInt(subscribers.size()));
+            } while (caller.equals(answerer));
             Instant[] startEnd = getRandomStartAndEnd();
-            CDRRecord record = new CDRRecord(type, subscribers[0], subscribers[1], startEnd[0], startEnd[1]);
+            CDRRecord record = new CDRRecord(type, caller, answerer, startEnd[0], startEnd[1]);
             records.add(record);
         }
         records.sort(Comparator.comparing(CDRRecord::getStart));
@@ -50,7 +74,6 @@ public class CDRGenerator {
         records.sort(Comparator.comparing(CDRRecord::getStart));
         return records;
     }
-
 
     protected Instant[] getRandomStartAndEnd() {
         Instant now = Instant.now();
@@ -81,29 +104,11 @@ public class CDRGenerator {
         return new Subscriber[]{new Subscriber(firstNumber.toString()), new Subscriber(secondNumber.toString())};
     }
 
-    public static List<Subscriber> getRandomSubscribers(int amount) {
-        Random random = new Random();
-        Set<String> uniqueNumbers = new HashSet<>();
-        while (uniqueNumbers.size() < amount) {
-            String number = generateRandomNumber(random);
-            uniqueNumbers.add(number);
-        }
-        return uniqueNumbers.stream().map(Subscriber::new).toList();
-    }
-
-    private static String generateRandomNumber(Random random) {
-        StringBuilder number = new StringBuilder("7");
-        for (int i = 0; i < 10; i++) {
-            number.append(random.nextInt(10));
-        }
-        return number.toString();
+    public List<Subscriber> getSubscribers() {
+        return subscribers;
     }
 
     public void setSubscribers(List<Subscriber> subscribers) {
         this.subscribers = subscribers;
-    }
-
-    public List<Subscriber> getSubscribers() {
-        return subscribers;
     }
 }

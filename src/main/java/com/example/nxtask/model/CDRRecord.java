@@ -23,10 +23,10 @@ public class CDRRecord {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CallType callType;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "caller_id", nullable = false)
     private Subscriber caller;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "answerer_id", nullable = false)
     private Subscriber answerer;
 
@@ -35,7 +35,9 @@ public class CDRRecord {
     @Column(nullable = false)
     private Instant endTime;
 
-    public CDRRecord() {}
+    public CDRRecord() {
+    }
+
     public CDRRecord(CallType callType, Subscriber caller, Subscriber answerer, Instant startTime, Instant endTime) {
         this.callType = callType;
         this.caller = caller;
@@ -47,47 +49,48 @@ public class CDRRecord {
         this.endTime = endTime;
     }
 
-    public void setCallType(CallType callType) {
-        this.callType = callType;
-    }
-
-    public void setCaller(Subscriber caller) {
-        this.caller = caller;
-    }
-
-    public void setAnswerer(Subscriber answerer) {
-        this.answerer = answerer;
-    }
-
-    public void setStart(Instant startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEnd(Instant endTime) {
-        this.endTime = endTime;
-    }
-
     public Long getId() {
         return id;
     }
+
     public CallType getCallType() {
         return callType;
+    }
+
+    public void setCallType(CallType callType) {
+        this.callType = callType;
     }
 
     public Subscriber getCaller() {
         return caller;
     }
 
+    public void setCaller(Subscriber caller) {
+        this.caller = caller;
+    }
+
     public Subscriber getAnswerer() {
         return answerer;
+    }
+
+    public void setAnswerer(Subscriber answerer) {
+        this.answerer = answerer;
     }
 
     public Instant getStart() {
         return startTime;
     }
 
+    public void setStart(Instant startTime) {
+        this.startTime = startTime;
+    }
+
     public Instant getEnd() {
         return endTime;
+    }
+
+    public void setEnd(Instant endTime) {
+        this.endTime = endTime;
     }
 
     @Override
