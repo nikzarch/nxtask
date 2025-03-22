@@ -1,7 +1,7 @@
 package com.example.nxtask.model;
 
-/***
- *список типов звонков
+/**
+ * Список типов звонков
  */
 public enum CallType {
     OUTGOING("01", "Исходящий"),

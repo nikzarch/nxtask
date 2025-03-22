@@ -11,6 +11,11 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Сервис для работы с CDR
+ * <p>
+ * Предоставляет методы для получения данных о звонках абонентов в период времени.
+ */
 @Service
 public class CDRService {
     @Autowired

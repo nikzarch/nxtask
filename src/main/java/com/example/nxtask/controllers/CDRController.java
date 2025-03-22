@@ -21,6 +21,13 @@ public class CDRController {
         this.cdrService = cdrService;
     }
 
+    /**
+     * Выполняет создание и сохранение CDR отчёта по абоненту за определенный период, отвечая на POST запрос.
+     * @param msisdn номер абонента
+     * @param from начало периода
+     * @param to конец периода
+     * @return текст ошибки или uuid отчета
+     */
     @PostMapping("/api/cdr")
     public ResponseEntity<String> getCDRReport(@RequestParam String msisdn, @RequestParam Instant from, @RequestParam Instant to) {
         try {
