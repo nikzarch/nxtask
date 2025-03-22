@@ -1,0 +1,6 @@
+com.example.nxtask
+com.example.nxtask.controllers
+com.example.nxtask.db
+com.example.nxtask.model
+com.example.nxtask.services
+com.example.nxtask.util

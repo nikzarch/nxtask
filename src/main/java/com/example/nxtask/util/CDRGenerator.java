@@ -17,6 +17,12 @@ public class CDRGenerator {
         this.subscribers = new ArrayList<>(subscribers);
     }
 
+    /**
+     * Создает список случайных абонентов.
+     *
+     * @param amount количество абонентов
+     * @return список случайных абонентов
+     */
     public static List<Subscriber> getRandomSubscribers(int amount) {
         Random random = new Random();
         Set<String> uniqueNumbers = new HashSet<>();
@@ -26,7 +32,12 @@ public class CDRGenerator {
         }
         return uniqueNumbers.stream().map(Subscriber::new).toList();
     }
-
+    /**
+     * Генерирует случайный телефонный номер.
+     *
+     * @param random объект Random
+     * @return строка с номером телефона
+     */
     private static String generateRandomNumber(Random random) {
         StringBuilder number = new StringBuilder("7");
         for (int i = 0; i < 10; i++) {
@@ -34,7 +45,12 @@ public class CDRGenerator {
         }
         return number.toString();
     }
-
+    /**
+     * Генерирует случайные CDR-записи.
+     *
+     * @param amount количество записей
+     * @return список CDR-записей
+     */
     public List<CDRRecord> generateCDRRecords(int amount) {
         List<CDRRecord> records = new ArrayList<>();
         Random random = new Random();
@@ -74,7 +90,11 @@ public class CDRGenerator {
         records.sort(Comparator.comparing(CDRRecord::getStart));
         return records;
     }
-
+    /**
+     * Генерирует случайные времена начала и окончания звонка.
+     *
+     * @return массив из двух Instant (startTime, endTime)
+     */
     protected Instant[] getRandomStartAndEnd() {
         Instant now = Instant.now();
         long maxOffsetSeconds = 365L * 24 * 60 * 60; // 1 год в секундах

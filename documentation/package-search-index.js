@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.example.nxtask"},{"l":"com.example.nxtask.controllers"},{"l":"com.example.nxtask.db"},{"l":"com.example.nxtask.model"},{"l":"com.example.nxtask.services"},{"l":"com.example.nxtask.util"}];updateSearchResults();

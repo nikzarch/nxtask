@@ -12,6 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
 
+/**
+ * Основной класс приложения
+ */
 @SpringBootApplication
 public class Application implements CommandLineRunner {
     @Autowired
@@ -26,6 +29,7 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        //temp
         List<Subscriber> subscribers = CDRGenerator.getRandomSubscribers(10);
         subscriberRepository.saveAll(subscribers);
 

@@ -6,13 +6,7 @@ import java.time.Instant;
 
 
 /**
- * Класс для CDR записи
- * CDR-запись включает в себя следующие данные:
- * тип вызова (01 - исходящие, 02 - входящие);
- * номер абонента, инициирующего звонок;
- * номер абонента, принимающего звонок;
- * дата и время начала звонка (ISO 8601);
- * дата и время окончания звонка (ISO 8601);
+ * Класс-сущность CDR записи
  */
 @Entity
 @Table(name = "cdr_records")
@@ -20,18 +14,32 @@ public class CDRRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    /**
+     * тип вызова (01 - исходящие, 02 - входящие);
+     */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CallType callType;
+    /**
+     * номер абонента, инициирующего звонок;
+     */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "caller_id", nullable = false)
     private Subscriber caller;
+    /**
+     * номер абонента, принимающего звонок;
+     */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "answerer_id", nullable = false)
     private Subscriber answerer;
-
+    /**
+     * дата и время начала звонка (ISO 8601);
+     */
     @Column(nullable = false)
     private Instant startTime;
+    /**
+     * дата и время окончания звонка (ISO 8601);
+     */
     @Column(nullable = false)
     private Instant endTime;
 
@@ -93,6 +101,10 @@ public class CDRRecord {
         this.endTime = endTime;
     }
 
+    /**
+     * Метод преобразования в строку
+     * @return строку вида "тип, номер звонящего, номер принимающего, дата и время начала звонка, дата и время конца звонка"
+     */
     @Override
     public String toString() {
         return this.callType.getType() + ',' + this.caller.getNumber() + ',' + this.answerer.getNumber() + ',' + this.startTime + ',' + this.endTime;

@@ -2,6 +2,7 @@ package com.example.nxtask.model;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
@@ -10,6 +11,9 @@ import java.util.regex.Pattern;
 @Entity
 @Table(name = "subscribers")
 public class Subscriber {
+    /**
+     * Регулярное выражение для валидации номера
+     */
     @Transient
     private final static String regex = "7\\d{10}";
     @Id

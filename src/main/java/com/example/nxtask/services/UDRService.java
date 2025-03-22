@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.*;
-
+/**
+ * Сервис для работы с UDR
+ * Предоставляет методы для получения данных об использовании связи абонентами.
+ */
 @Service
 public class UDRService {
 
@@ -18,7 +21,13 @@ public class UDRService {
     public UDRService(CDRRecordRepository cdrRecordRepository) {
         this.cdrRecordRepository = cdrRecordRepository;
     }
-
+    /**
+     * Получает UDR-запись для конкретного абонента за указанный месяц.
+     *
+     * @param number номер абонента
+     * @param month  месяц для фильтрации (если null, возвращаются данные за все время)
+     * @return UDR-запись абонента
+     */
     public UDR getUDRBySubscriber(String number, Integer month) {
         Duration incomingCall, outcomingCall;
         if (Objects.isNull(month)) {
@@ -35,7 +44,12 @@ public class UDRService {
         }
         return new UDR(number, incomingCall, outcomingCall);
     }
-
+    /**
+     * Получает все UDR-записи за указанный месяц.
+     *
+     * @param month месяц (1-12)
+     * @return список UDR-записей
+     */
     public List<UDR> getAllUDRByMonth(Integer month) {
         List<CDRRecord> cdrs = cdrRecordRepository.findByMonth(month);
         Map<String, Duration[]> callDurations = new HashMap<>();
