@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
 import java.util.List;
+
 /**
- *  JPA Репозиторий для работы с CDR-записями.
+ * JPA Репозиторий для работы с CDR-записями.
  */
 @Repository
 public interface CDRRecordRepository extends JpaRepository<CDRRecord, Long> {
@@ -30,6 +31,7 @@ public interface CDRRecordRepository extends JpaRepository<CDRRecord, Long> {
     List<CDRRecord> findByAnswererNumber(String answererNumber);
 
     List<CDRRecord> findByStartTimeBetween(Instant start, Instant end);
+
     /**
      * Находит CDR-записи по месяцу.
      *
@@ -38,5 +40,20 @@ public interface CDRRecordRepository extends JpaRepository<CDRRecord, Long> {
      */
     @Query("SELECT record FROM CDRRecord record WHERE MONTH(record.startTime) = :month")
     List<CDRRecord> findByMonth(@Param("month") int month);
+
+    /**
+     * Находит CDR записи исходящих звонков абонента за определенный период
+     *
+     * @return Лист CDR записей абонента за период
+     */
+    @Query("SELECT c FROM CDRRecord c WHERE c.caller.number = :msisdn AND c.startTime BETWEEN :from AND :to")
+    List<CDRRecord> findByCallerNumberAndPeriod(@Param("msisdn") String msisdn, @Param("from") Instant from, @Param("to") Instant to);
+    /**
+     * Находит CDR записи входящих звонков абонента за определенный период
+     *
+     * @return Лист CDR записей абонента за период
+     */
+    @Query("SELECT c FROM CDRRecord c WHERE c.answerer.number = :msisdn AND c.startTime BETWEEN :from AND :to")
+    List<CDRRecord> findByAnswererNumberAndPeriod(@Param("msisdn") String msisdn, @Param("from") Instant from, @Param("to") Instant to);
 
 }

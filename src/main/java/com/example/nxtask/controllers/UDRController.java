@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
 /**
  * REST-контроллер для работы с UDR (Usage Data Records).
  */
@@ -19,6 +20,7 @@ public class UDRController {
     public UDRController(UDRService udrService) {
         this.udrService = udrService;
     }
+
     /**
      * Получает UDR-запись для конкретного абонента.
      *
@@ -28,8 +30,13 @@ public class UDRController {
      */
     @GetMapping
     public UDR getUDRBySubscriber(@RequestParam String msisdn, @RequestParam(required = false) Integer month) {
+        if (month != null && (month < 1 || month > 12)) {
+            throw new IllegalArgumentException("Ошибка: месяц должен быть от 1 до 12.");
+        }
+
         return udrService.getUDRBySubscriber(msisdn, month);
     }
+
     /**
      * Получает все UDR-записи за указанный месяц.
      *
@@ -38,6 +45,9 @@ public class UDRController {
      */
     @GetMapping(params = "!msisdn")
     public List<UDR> getAllUDRByMonth(@RequestParam Integer month) {
+        if (month != null && (month < 1 || month > 12)) {
+            throw new IllegalArgumentException("Ошибка: месяц должен быть от 1 до 12.");
+        }
         return udrService.getAllUDRByMonth(month);
     }
 

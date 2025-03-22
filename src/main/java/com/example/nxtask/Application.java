@@ -21,6 +21,8 @@ public class Application implements CommandLineRunner {
     private SubscriberRepository subscriberRepository;
     @Autowired
     private CDRRecordRepository cdrRecordRepository;
+    @Autowired
+    private CDRGenerator cdrGenerator;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -29,14 +31,12 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //temp
         List<Subscriber> subscribers = CDRGenerator.getRandomSubscribers(10);
         subscriberRepository.saveAll(subscribers);
-
-        CDRGenerator generator = new CDRGenerator(subscribers);
-        List<CDRRecord> records = generator.generateCDRRecords(50);
+        cdrGenerator.setSubscribers(subscribers);
+        List<CDRRecord> records = cdrGenerator.generateCDRRecords(50);
         cdrRecordRepository.saveAll(records);
-        cdrRecordRepository.findAll().forEach(System.out::println);
+        cdrRecordRepository.findAll().forEach(System.out::println); //temp
 
     }
 }

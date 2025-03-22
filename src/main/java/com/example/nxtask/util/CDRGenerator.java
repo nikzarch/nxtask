@@ -3,6 +3,7 @@ package com.example.nxtask.util;
 import com.example.nxtask.model.CDRRecord;
 import com.example.nxtask.model.CallType;
 import com.example.nxtask.model.Subscriber;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.*;
@@ -10,6 +11,7 @@ import java.util.*;
 /**
  * Класс генератор CDR записей
  */
+@Component
 public class CDRGenerator {
     private List<Subscriber> subscribers;
 
@@ -32,6 +34,7 @@ public class CDRGenerator {
         }
         return uniqueNumbers.stream().map(Subscriber::new).toList();
     }
+
     /**
      * Генерирует случайный телефонный номер.
      *
@@ -45,6 +48,7 @@ public class CDRGenerator {
         }
         return number.toString();
     }
+
     /**
      * Генерирует случайные CDR-записи.
      *
@@ -90,6 +94,7 @@ public class CDRGenerator {
         records.sort(Comparator.comparing(CDRRecord::getStart));
         return records;
     }
+
     /**
      * Генерирует случайные времена начала и окончания звонка.
      *

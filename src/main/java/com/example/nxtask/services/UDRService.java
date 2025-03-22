@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.*;
+
 /**
  * Сервис для работы с UDR
  * Предоставляет методы для получения данных об использовании связи абонентами.
@@ -21,6 +22,7 @@ public class UDRService {
     public UDRService(CDRRecordRepository cdrRecordRepository) {
         this.cdrRecordRepository = cdrRecordRepository;
     }
+
     /**
      * Получает UDR-запись для конкретного абонента за указанный месяц.
      *
@@ -44,6 +46,7 @@ public class UDRService {
         }
         return new UDR(number, incomingCall, outcomingCall);
     }
+
     /**
      * Получает все UDR-записи за указанный месяц.
      *

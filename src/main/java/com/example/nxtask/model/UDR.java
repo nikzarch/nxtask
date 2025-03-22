@@ -1,6 +1,7 @@
 package com.example.nxtask.model;
 
 import java.time.Duration;
+
 /**
  * UDR (Usage Data Record)
  */
@@ -8,24 +9,26 @@ public class UDR {
     private String msisdn;
     private CallTime incomingCall;
     private CallTime outcomingCall;
+
     /**
      * Конструктор для создания UDR.
      *
-     * @param msisdn  номер абонента
-     * @param incomingCall время входящих звонков
-     * @param outcomingCall  время исходящих звонков
+     * @param msisdn        номер абонента
+     * @param incomingCall  время входящих звонков
+     * @param outcomingCall время исходящих звонков
      */
     public UDR(String msisdn, CallTime incomingCall, CallTime outcomingCall) {
         this.msisdn = msisdn;
         this.incomingCall = incomingCall;
         this.outcomingCall = outcomingCall;
     }
+
     /**
      * Конструктор для создания UDR.
      *
-     * @param msisdn  номер абонента
-     * @param incomingCall время входящих звонков
-     * @param outcomingCall  время исходящих звонков
+     * @param msisdn        номер абонента
+     * @param incomingCall  время входящих звонков
+     * @param outcomingCall время исходящих звонков
      */
     public UDR(String msisdn, Duration incomingCall, Duration outcomingCall) {
         this.msisdn = msisdn;
