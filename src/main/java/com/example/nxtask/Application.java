@@ -37,7 +37,6 @@ public class Application implements CommandLineRunner {
         List<CDRRecord> records = cdrGenerator.generateCDRRecords(50);
         cdrRecordRepository.saveAll(records);
         cdrRecordRepository.findAll().forEach(System.out::println); //temp
-
     }
 }
 

@@ -4,10 +4,15 @@ import com.example.nxtask.db.CDRRecordRepository;
 import com.example.nxtask.db.SubscriberRepository;
 import com.example.nxtask.model.UDR;
 import com.example.nxtask.services.UDRService;
+import com.example.nxtask.util.CDRGenerator;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -26,13 +31,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UDRControllerTest {
     @Autowired
     private MockMvc mock;
-
+    @MockitoBean
+    private CDRGenerator cdrGenerator;
     @MockitoBean
     private UDRService udrService;
     @MockitoBean
     private SubscriberRepository subscriberRepository;
     @MockitoBean
     private CDRRecordRepository cdrRecordRepository;
+
 
     /**
      * Тест контроллера - вывод отчета по абоненту
