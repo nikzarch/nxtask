@@ -12,6 +12,9 @@ task for nexign bootcamp
 	Задача 3 доступна по адресу http://localhost:8080/api/cdr?msisdn=**номер**&from=**2025-01-01T00:00:00Z**&to=**2025-01-31T23:59:59Z** , from и to - даты в формате ISO8601
 	
 	Обратите внимание, при генерации csv файла с CDR папка reports создается в директории с JAR-архивом
+# Документация
+
+документация JavaDoc по пути documentation/index.html
 # Задание
 
 ## Описание
