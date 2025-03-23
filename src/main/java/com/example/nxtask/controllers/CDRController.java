@@ -23,9 +23,10 @@ public class CDRController {
 
     /**
      * Выполняет создание и сохранение CDR отчёта по абоненту за определенный период, отвечая на POST запрос.
+     *
      * @param msisdn номер абонента
-     * @param from начало периода
-     * @param to конец периода
+     * @param from   начало периода
+     * @param to     конец периода
      * @return текст ошибки или uuid отчета
      */
     @PostMapping("/api/cdr")
@@ -34,7 +35,7 @@ public class CDRController {
             UUID uuid = cdrService.getAndSaveCDRByNumberAndBetweenDate(msisdn, from, to);
             return ResponseEntity.ok().body(uuid.toString());
         } catch (Exception exc) {
-            return ResponseEntity.internalServerError().body(exc.getMessage());
+            return ResponseEntity.badRequest().body(exc.getMessage());
         }
 
     }

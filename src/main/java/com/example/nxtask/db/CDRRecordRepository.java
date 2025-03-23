@@ -48,6 +48,7 @@ public interface CDRRecordRepository extends JpaRepository<CDRRecord, Long> {
      */
     @Query("SELECT c FROM CDRRecord c WHERE c.caller.number = :msisdn AND c.startTime BETWEEN :from AND :to")
     List<CDRRecord> findByCallerNumberAndPeriod(@Param("msisdn") String msisdn, @Param("from") Instant from, @Param("to") Instant to);
+
     /**
      * Находит CDR записи входящих звонков абонента за определенный период
      *

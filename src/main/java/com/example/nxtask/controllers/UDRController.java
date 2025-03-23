@@ -31,7 +31,7 @@ public class UDRController {
     @GetMapping
     public UDR getUDRBySubscriber(@RequestParam String msisdn, @RequestParam(required = false) Integer month) {
         if (month != null && (month < 1 || month > 12)) {
-            throw new IllegalArgumentException("Ошибка: месяц должен быть от 1 до 12.");
+            throw new IllegalArgumentException("Exception: month must be between 1 and 12.");
         }
 
         return udrService.getUDRBySubscriber(msisdn, month);
@@ -46,7 +46,7 @@ public class UDRController {
     @GetMapping(params = "!msisdn")
     public List<UDR> getAllUDRByMonth(@RequestParam Integer month) {
         if (month != null && (month < 1 || month > 12)) {
-            throw new IllegalArgumentException("Ошибка: месяц должен быть от 1 до 12.");
+            throw new IllegalArgumentException("Exception: month must be between 1 and 12.");
         }
         return udrService.getAllUDRByMonth(month);
     }
