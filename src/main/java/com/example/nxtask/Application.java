@@ -31,10 +31,26 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        List<Subscriber> subscribers = CDRGenerator.getRandomSubscribers(10);
+        Integer numberOfRecords, numberOfSubscribers;
+        try {
+            numberOfRecords = Integer.parseInt(args[0]);
+            numberOfSubscribers = Integer.parseInt(args[1]);
+            if (numberOfRecords <= 0) {
+                throw new IllegalArgumentException("arg1 must be bigger than zero");
+            }
+            if (numberOfSubscribers <= 1) {
+                throw new IllegalArgumentException("arg2 must be bigger than one");
+            }
+        } catch (Exception exc) {
+            System.out.println("Параметры количество записей и абонентов установлены на стандартное значение");
+            numberOfRecords = 1000;
+            numberOfSubscribers = 10;
+        }
+        List<Subscriber> subscribers = CDRGenerator.getRandomSubscribers(numberOfSubscribers);
         subscriberRepository.saveAll(subscribers);
+        subscriberRepository.findAll().stream().map(Subscriber::getNumber).forEach(System.out::println);
         cdrGenerator.setSubscribers(subscribers);
-        List<CDRRecord> records = cdrGenerator.generateCDRRecords(50);
+        List<CDRRecord> records = cdrGenerator.generateCDRRecords(numberOfRecords);
         cdrRecordRepository.saveAll(records);
         cdrRecordRepository.findAll().forEach(System.out::println); //temp
     }
