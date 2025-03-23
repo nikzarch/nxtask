@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +33,7 @@ public class CDRService {
     public UUID getAndSaveCDRByNumberAndBetweenDate(String msisdn, Instant from, Instant to) throws IOException, NoCDRRecordsException {
         List<CDRRecord> cdrs = cdrRecordRepository.findByCallerNumberAndPeriod(msisdn, from, to);
         cdrs.addAll(cdrRecordRepository.findByAnswererNumberAndPeriod(msisdn, from, to));
+        cdrs.sort(Comparator.comparing(CDRRecord::getStart));
         UUID uuid = UUID.randomUUID();
         if (cdrs.isEmpty()) {
             throw new NoCDRRecordsException("Записей не найдено");
